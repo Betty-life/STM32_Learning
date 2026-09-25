@@ -1,0 +1,29 @@
+# Keil MDK
+*.uvguix.*
+*.uvoptx
+*.scvd
+Objects/
+Listings/
+*.o
+*.d
+*.crf
+*.htm
+*.dep
+*.map
+*.bak
+*.axf
+*.hex
+*.bin
+
+# STM32CubeIDE
+Debug/
+Release/
+.settings/
+.metadata/
+.project
+.cproject
+*.mxproject
+
+# 通用
+.DS_Store
+Thumbs.db
