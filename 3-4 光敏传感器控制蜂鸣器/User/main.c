@@ -5,12 +5,19 @@
 
 int main(void)
 {
-	
-	
+	Buzzer_Init();
+	LightSensor_Init();
 	
 	while (1)
 	{
 
-		
+		if(LightSensor_Get() == 1)
+		{
+			Buzzer_ON();
+		}
+		else if(LightSensor_Get() == 0)
+		{
+			Buzzer_OFF();
+		}
 	}
 }
