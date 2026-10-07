@@ -11,14 +11,17 @@ int main(void)
 	OLED_Init();		//OLED初始化
 	PWM_Init();
 	
-	PWM_SetCompare2(2500);
-	
 	while (1)
 	{
-//		PWM_SetCompare2(500);
-//		Delay_ms(10);
-		
-//		Delay_ms(10);
-		
+		for (i = 0; i <= 100; i++)
+		{
+			PWM_SetCompare1(i);
+			Delay_ms(10);
+		}
+		for (i = 0; i <= 100; i++)
+		{
+			PWM_SetCompare1(100 - i);
+			Delay_ms(10);
+		}
 	}
 }
