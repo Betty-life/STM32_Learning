@@ -1,29 +1,79 @@
 #include "stm32f10x.h"                  // Device header
 #include "Delay.h"
 #include "OLED.h"
+#include "MyDMA.h"
 
+//uint8_t aa = 0x66;  //存储在运行内存SRAM  0x2000 0000
+//const uint8_t aa = 66;  //存储在程序存储器Flash 0x0800 0E00
+uint8_t DataA[] = {0x01, 0x02, 0x03, 0x04};
+uint8_t DataB[] = {0, 0, 0, 0};
+	
 int main(void)
 {
-	/*模块初始化*/
-	OLED_Init();		//OLED初始化
 	
-	/*OLED显示*/
-	OLED_ShowChar(1, 1, 'A');				//1行1列显示字符A
+	OLED_Init();	
+	MyDMA_Init((uint32_t)DataA, (uint32_t)DataB, 4);
 	
-	OLED_ShowString(1, 3, "HelloWorld!");	//1行3列显示字符串HelloWorld!
+	OLED_ShowString(1, 1, "DataA");
+	OLED_ShowString(3, 1, "DataB");
+	OLED_ShowHexNum(1, 8, (uint32_t)DataA, 8);
+	OLED_ShowHexNum(3, 8, (uint32_t)DataB, 8);
 	
-	OLED_ShowNum(2, 1, 12345, 5);			//2行1列显示十进制数字12345，长度为5
+//	OLED_ShowHexNum(2, 1, DataA[0], 2);	
+//	OLED_ShowHexNum(2, 4, DataA[1], 2);	
+//	OLED_ShowHexNum(2, 7, DataA[2], 2);	
+//	OLED_ShowHexNum(2, 10, DataA[3], 2);	
+//	OLED_ShowHexNum(4, 1, DataB[0], 2);	
+//	OLED_ShowHexNum(4, 4, DataB[1], 2);	
+//	OLED_ShowHexNum(4, 7, DataB[2], 2);	
+//	OLED_ShowHexNum(4, 10, DataB[3], 2);
+//	
+
 	
-	OLED_ShowSignedNum(2, 7, -66, 4);		//2行7列显示有符号十进制数字-66，长度为2
+//	OLED_ShowHexNum(3, 1, DataA[0], 2);	
+//	OLED_ShowHexNum(3, 4, DataA[1], 2);	
+//	OLED_ShowHexNum(3, 7, DataA[2], 2);	
+//	OLED_ShowHexNum(3, 10, DataA[3], 2);	
+//	OLED_ShowHexNum(4, 1, DataB[0], 2);	
+//	OLED_ShowHexNum(4, 4, DataB[1], 2);	
+//	OLED_ShowHexNum(4, 7, DataB[2], 2);	
+//	OLED_ShowHexNum(4, 10, DataB[3], 2);
 	
-	OLED_ShowHexNum(3, 1, 0xAA55, 4);		//3行1列显示十六进制数字0xA5A5，长度为4
-	
-	OLED_ShowBinNum(4, 1, 0xAA55, 16);		//4行1列显示二进制数字0xA5A5，长度为16
-											//C语言无法直接写出二进制数字，故需要用十六进制表示
-	
-//	OLED_Clear();
+//	OLED_ShowHexNum(1, 1, aa, 2);
+//	OLED_ShowHexNum(2, 1, (uint32_t)&aa, 8);
+//	OLED_ShowHexNum(3, 1, (uint32_t)&ADC1->DR, 8);  //外设寄存器地址 4001 244C
+
 	while (1)
 	{
+		
+		OLED_ShowHexNum(2, 1, DataA[0], 2);	
+		OLED_ShowHexNum(2, 4, DataA[1], 2);	
+		OLED_ShowHexNum(2, 7, DataA[2], 2);	
+		OLED_ShowHexNum(2, 10, DataA[3], 2);	
+		OLED_ShowHexNum(4, 1, DataB[0], 2);	
+		OLED_ShowHexNum(4, 4, DataB[1], 2);	
+		OLED_ShowHexNum(4, 7, DataB[2], 2);	
+		OLED_ShowHexNum(4, 10, DataB[3], 2);
+		
+		Delay_ms(1000);
+		
+		MyDMA_Transfer();
+		
+		OLED_ShowHexNum(2, 1, DataA[0], 2);	
+		OLED_ShowHexNum(2, 4, DataA[1], 2);	
+		OLED_ShowHexNum(2, 7, DataA[2], 2);	
+		OLED_ShowHexNum(2, 10, DataA[3], 2);	
+		OLED_ShowHexNum(4, 1, DataB[0], 2);	
+		OLED_ShowHexNum(4, 4, DataB[1], 2);	
+		OLED_ShowHexNum(4, 7, DataB[2], 2);	
+		OLED_ShowHexNum(4, 10, DataB[3], 2);
+		
+		Delay_ms(1000);
+		
+		DataA[0] ++;
+		DataA[1] ++;
+		DataA[2] ++;
+		DataA[3] ++;
 		
 	}
 }
